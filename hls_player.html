@@ -7,27 +7,34 @@
 </head>
 
 <body>
+    <label for ='url' >URL:</label>
+    <input id='url' size="70" />
+    <input type="button" onclick='play()' value="Click"><br>
     <video id="video" width="500" height="500" controls></video>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        const video = document.getElementById('video');
-		// this is the hls server url 
-        const videoSrc = 'https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8';
+        function play()
+        {
+            const videoSrc = document.getElementById('url').value;
+            const video = document.getElementById('video');
+            //const videoSrc = 'https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8';
 
-        if (Hls.isSupported()) {
-            const hls = new Hls();
+            if (Hls.isSupported()) {
+                const hls = new Hls();
 
-            hls.loadSource(videoSrc);
-            hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                video.play();
-            });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = videoSrc;
-            video.addEventListener('loadedmetadata', () => {
-                video.play();
-            });
+                hls.loadSource(videoSrc);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                    video.play();
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = videoSrc;
+                video.addEventListener('loadedmetadata', () => {
+                    video.play();
+                });
+            }
         }
+
     </script>
 </body>
 
